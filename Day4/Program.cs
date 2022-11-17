@@ -28,7 +28,8 @@ static void Part1(string[] input)
         var winningCards = bingoCards.Where(c => c.HasWon());
         if (bingoCards.Any(c => c.HasWon()))
         {
-            var winningCard = bingoCards.First(c => c.HasWon());
+            var winningCardScore = bingoCards.First(c => c.HasWon()).GetScore();
+            Console.WriteLine("Winning card score: {0} Last ball: {1} Final score: {2}", winningCardScore, ball, winningCardScore * ball);
             break;
         }
     }

@@ -13,19 +13,28 @@ public class BingoCard
 
     public bool HasWon()
     {
-        var hasWon = _squares
+        var hasHorizontalWin = _squares
             .Where(SquareHasBeenCalled)
             .GroupBy(s => s.X)
             .Select(g => g.Count())
             .Any(g => g == 5);
 
-        hasWon = hasWon || _squares
+        var hasVerticalWin = _squares
             .Where(SquareHasBeenCalled)
             .GroupBy(s => s.Y)
             .Select(g => g.Count())
             .Any(g => g == 5);
 
-        return hasWon;
+        var hasDiagonalWin = false;
+
+        return hasHorizontalWin || hasVerticalWin || hasDiagonalWin;
+    }
+
+    public int GetScore()
+    {
+        return _squares
+            .Where(s => !SquareHasBeenCalled(s))
+            .Sum(s => s.Value);
     }
 
     private void SetSquares(string[] input)
