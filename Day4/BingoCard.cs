@@ -25,9 +25,7 @@ public class BingoCard
             .Select(g => g.Count())
             .Any(g => g == 5);
 
-        var hasDiagonalWin = false;
-
-        return hasHorizontalWin || hasVerticalWin || hasDiagonalWin;
+        return hasHorizontalWin || hasVerticalWin;
     }
 
     public int GetScore()
