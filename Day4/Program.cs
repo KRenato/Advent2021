@@ -37,7 +37,33 @@ static void Part1(string[] input)
 
 static void Part2(string[] input)
 {
+    var bingoBalls = input[0]
+        .Split(',')
+        .Select(s => int.Parse(s));
 
+    var calledBingoBalls = new List<int>();
+
+    var bingoCards = GetBingoCards(input, calledBingoBalls);
+
+    int? winningCardScore = null;
+    int? winningBall = null;
+
+    foreach (var ball in bingoBalls)
+    {
+        calledBingoBalls.Add(ball);
+
+        if (bingoCards.Any(c => c.HasWon()))
+        {
+            winningCardScore = bingoCards.FirstOrDefault(c => c.HasWon())?.GetScore();
+            winningBall = ball;
+            bingoCards.RemoveAll(c => c.HasWon());
+        }
+    }
+
+    if (winningCardScore.HasValue)
+    {
+        Console.WriteLine("Last winning card score: {0} Last ball: {1} Final score: {2}", winningCardScore, winningBall, winningCardScore * winningBall);
+    }
 }
 
 static List<BingoCard> GetBingoCards(string[] input, List<int> calledBingoBalls)
