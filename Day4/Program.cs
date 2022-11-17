@@ -16,7 +16,7 @@ static void Part1(string[] input)
 {
     var bingoBalls = input[0]
         .Split(',')
-        .Select(s => int.Parse(s));
+        .Select(int.Parse);
 
     var calledBingoBalls = new List<int>();
 
@@ -40,7 +40,7 @@ static void Part2(string[] input)
 {
     var bingoBalls = input[0]
         .Split(',')
-        .Select(s => int.Parse(s));
+        .Select(int.Parse);
 
     var calledBingoBalls = new List<int>();
 

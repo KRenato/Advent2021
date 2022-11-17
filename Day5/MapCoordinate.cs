@@ -4,13 +4,10 @@ public class MapCoordinate
 {
     public MapCoordinate(int x, int y)
     {
-        X = x;
-        Y = y;
+        Coordinate = new Coordinate(x, y);
     }
 
-    public int X { get; }
-
-    public int Y { get; }
+    public Coordinate Coordinate { get; }
 
     public int Hits { get; private set; }
 

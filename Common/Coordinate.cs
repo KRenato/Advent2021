@@ -8,6 +8,12 @@ public readonly struct Coordinate : IEquatable<Coordinate>
         Y = y;
     }
 
+    public Coordinate(int[] points)
+    {
+        X = points[0];
+        Y = points[1];
+    }
+
     public int X { get; }
 
     public int Y { get; }

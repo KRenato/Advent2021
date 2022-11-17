@@ -42,7 +42,7 @@ public class BingoCard
             var row = input[i]
                 .Split(' ')
                 .Where(r => !string.IsNullOrEmpty(r))
-                .Select(r => int.Parse(r))
+                .Select(int.Parse)
                 .ToArray();
 
             for (int j = 0; j < 5; j++)
