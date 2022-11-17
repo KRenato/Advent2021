@@ -1,5 +1,6 @@
 ﻿using Common;
 using Day4;
+using System.Collections.Generic;
 
 var input = await InputReader.GetInputAsync();
 
@@ -70,17 +71,15 @@ static List<BingoCard> GetBingoCards(string[] input, List<int> calledBingoBalls)
 {
     var bingoCards = new List<BingoCard>();
 
-    for (int i = 2; i < input.Length; i += 6)
-    {
-        var cardArray = new string[5];
-
-        for (int j = 0; j < 5; j++)
+    input
+        .Where((inputLine, index) => index > 1)
+        .Chunk(6)
+        .ToList()
+        .ForEach(c =>
         {
-            cardArray[j] = input[i + j];
-        }
-
-        bingoCards.Add(new BingoCard(cardArray, calledBingoBalls));
-    }
+            var card = new BingoCard(c[..5], calledBingoBalls);
+            bingoCards.Add(card);
+        });
 
     return bingoCards;
 }
