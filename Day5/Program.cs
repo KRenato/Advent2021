@@ -1,6 +1,5 @@
 ﻿using Common;
 using Day5;
-using System.Runtime.CompilerServices;
 
 var input = await InputReader.GetInputAsync();
 
@@ -14,15 +13,64 @@ Part2(input);
 
 static void Part1(string[] input)
 {
+    var map = new CoordinateMap<MapCoordinateHit>();
+
     foreach (var item in input)
     {
         var beginAndEndCoordinates = GetBeginAndEndCoordinates(item);
-        var LineCoordinates = ExpandCoordinatesToLine(beginAndEndCoordinates.Item1, beginAndEndCoordinates.Item2);
+        var beginCoord = beginAndEndCoordinates.Item1;
+        var endCoord = beginAndEndCoordinates.Item2;
+        if (!beginCoord.IsSameXAxisAs(endCoord) && !beginCoord.IsSameYAxisAs(endCoord))
+        {
+            continue;
+        }
+
+        var lineSegment = new LineSegment(beginCoord, endCoord);
+
+        foreach (var coordinate in lineSegment.Coordinates)
+        {
+            if (map.TryGetValue(coordinate, out MapCoordinateHit? existingCoordinate))
+            {
+                existingCoordinate.Hit();
+                continue;
+            }
+            
+            map.Add(new MapCoordinateHit(coordinate.X, coordinate.Y));
+        }
     }
+
+    var safePoints = map.Where(m => m.Count >= 2).ToList();
+
+    Console.WriteLine("Number of safe points: {0}", safePoints.Count);
 }
 
 static void Part2(string[] input)
 {
+    var map = new CoordinateMap<MapCoordinateHit>();
+
+    foreach (var item in input)
+    {
+        var beginAndEndCoordinates = GetBeginAndEndCoordinates(item);
+        var beginCoord = beginAndEndCoordinates.Item1;
+        var endCoord = beginAndEndCoordinates.Item2;
+
+        var lineSegment = new LineSegment(beginCoord, endCoord);
+
+        foreach (var coordinate in lineSegment.Coordinates)
+        {
+            if (map.TryGetValue(coordinate, out MapCoordinateHit? existingCoordinate))
+            {
+                existingCoordinate.Hit();
+                continue;
+            }
+
+            map.Add(new MapCoordinateHit(coordinate.X, coordinate.Y));
+        }
+    }
+
+    var safePoints = map.Where(m => m.Count >= 2).ToList();
+
+    Console.WriteLine("Number of safe points: {0}", safePoints.Count);
 }
 
 static (Coordinate, Coordinate) GetBeginAndEndCoordinates(string input)
@@ -41,11 +89,4 @@ static (Coordinate, Coordinate) GetBeginAndEndCoordinates(string input)
         .ToArray();
 
     return new(new Coordinate(beginCoordinate), new Coordinate(endCoordinate));
-}
-
-static List<Coordinate> ExpandCoordinatesToLine(Coordinate origin, Coordinate endpoint)
-{
-    var line = new List<Coordinate>();
-
-    return line;
 }

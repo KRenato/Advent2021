@@ -1,6 +1,5 @@
 ﻿using Common;
 using Day4;
-using System.Collections.Generic;
 
 var input = await InputReader.GetInputAsync();
 

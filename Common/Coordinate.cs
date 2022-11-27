@@ -1,4 +1,4 @@
-﻿namespace Day5;
+﻿namespace Common;
 
 public readonly struct Coordinate : IEquatable<Coordinate>
 {
